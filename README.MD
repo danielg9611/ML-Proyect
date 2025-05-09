@@ -1,6 +1,8 @@
 <p align="center">
-  <img src="docs/Paull.png" alt="Descripción de la imagen" width="600">
+  <img src="docs/Paull.png" alt="Descripción de la imagen" width="700" style="border-radius: 15px;>
 </p>
+
+_____
 
 ### ⚽ **Predicción de Resultados de Fútbol con Machine Learning**  
 ¿Y si el fútbol pudiera predecirse?   
