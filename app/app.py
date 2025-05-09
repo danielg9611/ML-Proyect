@@ -6,8 +6,8 @@ from app_utils import predict
  
 
 
-st.sidebar.image("Paull.png", use_container_width=True)
-st.sidebar.title("Predicciones de Fútbol")
+st.sidebar.image("../docs/Paull.png", use_container_width=True)
+st.sidebar.title("Un juego de Datos")
 st.sidebar.markdown("""
 Predice los resultados de partidos de fútbol. 
 Selecciona la liga, los equipos, y la fecha del partido. Luego, haz clic en 
