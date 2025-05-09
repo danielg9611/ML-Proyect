@@ -2,7 +2,7 @@
   <img src="docs/Paull.png" alt="Descripción de la imagen" width="700" style="border-radius: 15px;>
 </p>
 
-___
+____
 
 ### ⚽ **Predicción de Resultados de Fútbol con Machine Learning**  
 ¿Y si el fútbol pudiera predecirse?   
