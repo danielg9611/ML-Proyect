@@ -3,16 +3,16 @@ import pickle
 
 ## DataFrame
 
-df = pd.read_csv('../data/processed.csv')
+df = pd.read_csv('../data/processed.csv', )
 
 df['date'] = pd.to_datetime(df['date'])
-df.drop(columns=['fixture_id','home_team_id','away_team_id','home_score','away_score','league_season','home_result'], inplace=True)
+df.drop(columns=['fixture_id','home_score','away_score','league_season','home_result','league'], inplace=True)
 
 
 
 ## Modelo
  
-modelo = pickle.load(open("../models/model_model.pkl", 'rb'))
+modelo = pickle.load(open("../models/pca_model.pkl", 'rb'))
 
 
 
@@ -52,7 +52,7 @@ def predict(home_team,away_team, date):
     ## HOME
 
     home_df = n_df[n_df['home_team'] == home_team]
-    home_col_list = ['home_avg_goals_last_3','home_avg_goals_against_last_3','home_avg_goals_last_5','home_avg_goals_against_last_5','home_avg_goals_last_10','home_avg_goals_against_last_10','home_avg_goals_season','home_avg_goals_against_season','home_avg_scoring_last_3','home_avg_scoring_last_5','home_avg_scoring_last_10','home_avg_scoring_season','home_points_last_3','home_points_last_5','home_points_last_10']
+    home_col_list = ['home_avg_goals_last_3','home_avg_goals_against_last_3','home_avg_goals_last_5','home_avg_goals_against_last_5','home_avg_goals_last_10','home_avg_goals_against_last_10','home_avg_goals_season','home_avg_goals_against_season','home_avg_scoring_last_3','home_avg_scoring_last_5','home_avg_scoring_last_10','home_avg_scoring_season','home_points_last_3','home_points_last_5','home_points_last_10', 'home_streak', 'home_elo']
     n_df.loc[home_df.index[0], home_col_list] = home_df.loc[home_df.index[1], home_col_list].values
 
 
@@ -60,7 +60,7 @@ def predict(home_team,away_team, date):
     ## AWAY
 
     away_df = n_df[n_df['away_team'] == away_team]
-    away_col_list = ['away_avg_goals_last_3','away_avg_goals_against_last_3','away_avg_goals_last_5','away_avg_goals_against_last_5','away_avg_goals_last_10','away_avg_goals_against_last_10','away_avg_goals_season','away_avg_goals_against_season','away_avg_scoring_last_3','away_avg_scoring_last_5','away_avg_scoring_last_10','away_avg_scoring_season','away_points_last_3','away_points_last_5','away_points_last_10']
+    away_col_list = ['away_avg_goals_last_3','away_avg_goals_against_last_3','away_avg_goals_last_5','away_avg_goals_against_last_5','away_avg_goals_last_10','away_avg_goals_against_last_10','away_avg_goals_season','away_avg_goals_against_season','away_avg_scoring_last_3','away_avg_scoring_last_5','away_avg_scoring_last_10','away_avg_scoring_season','away_points_last_3','away_points_last_5','away_points_last_10', 'away_streak', 'away_elo']
     n_df.loc[away_df.index[0], away_col_list] = away_df.loc[away_df.index[1], away_col_list].values
 
 
@@ -79,6 +79,18 @@ def predict(home_team,away_team, date):
     to_predict['points_diff_last_5'] = to_predict['home_points_last_5'] - to_predict['away_points_last_5']
     to_predict['points_diff_last_10'] = to_predict['home_points_last_10'] - to_predict['away_points_last_10']
 
+
+
+    to_predict['elo_diff'] = to_predict['home_elo'] - to_predict['away_elo']
+    to_predict['streak_diff'] = to_predict['home_streak'] - to_predict['away_streak']
+
+    to_predict['h2h_matches'] = 2
+    to_predict['h2h_home_wins'] = 1
+    to_predict['h2h_away_wins'] = 1
+    to_predict['h2h_draws'] = 0
+    to_predict['h2h_home_goals'] = 1
+    to_predict['h2h_away_goals'] = 1
+    to_predict['h2h_goal_diff'] = 0
 
 
     ## Prediction
